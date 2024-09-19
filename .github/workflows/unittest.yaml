@@ -24,12 +24,16 @@ jobs:
         with:
           python-version: '3.8'
 
-      # Step 3: Install dependencies
+      # Step 3: Install dependencies (make sure the file is 'requirements.txt')
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirement.txt
+          pip install -r requirements.txt
 
-      # Step 4: Run tests
+      # Step 4: Set PYTHONPATH to include the src directory
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/src" >> $GITHUB_ENV
+
+      # Step 5: Run tests
       - name: Run tests
         run: pytest
